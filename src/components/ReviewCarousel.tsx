@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styles from '../pages/LandingPage.module.css';
 
 interface Review {
@@ -13,8 +13,7 @@ interface ReviewCarouselProps {
 
 const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ reviews }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollSpeed = 500; // ms to scroll one item
+  const currentIndexRef = useRef(0); // Changed from useState to useRef for internal counter
   const pauseBetweenScroll = 3000; // ms to pause before next scroll
 
   // Duplicate reviews to create an infinite loop effect
@@ -28,23 +27,22 @@ const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ reviews }) => {
     const originalReviewsCount = reviews.length;
 
     const autoScroll = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = prevIndex + 1;
-        const targetScrollLeft = nextIndex * itemWidthWithGap;
+      currentIndexRef.current += 1; // Update ref directly
+      let nextIndex = currentIndexRef.current;
 
-        if (nextIndex >= originalReviewsCount * 2) { // If we've scrolled past the second set of original reviews
-          // Instantly jump back to the start of the second set (first duplicate)
-          carousel.scrollLeft = originalReviewsCount * itemWidthWithGap;
-          return originalReviewsCount; // Reset index to point to the first duplicate
-        } else {
-          carousel.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
-          return nextIndex;
-        }
-      });
+      const targetScrollLeft = nextIndex * itemWidthWithGap;
+
+      if (nextIndex >= originalReviewsCount * 2) { // If we've scrolled past the second set of original reviews
+        // Instantly jump back to the start of the second set (first duplicate)
+        carousel.scrollLeft = originalReviewsCount * itemWidthWithGap;
+        currentIndexRef.current = originalReviewsCount; // Reset ref to point to the first duplicate
+      } else {
+        carousel.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+      }
     }, pauseBetweenScroll);
 
     return () => clearInterval(autoScroll);
-  }, [reviews, pauseBetweenScroll]);
+  }, [reviews, pauseBetweenScroll]); // currentIndexRef is not a dependency as its .current property is mutable
 
   const blurId = (id: string) => {
     if (id.length <= 2) return '*'.repeat(id.length);

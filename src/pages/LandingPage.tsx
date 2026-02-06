@@ -38,11 +38,10 @@ const convertReplyIntervalToHours = (interval: string): number => {
 
 const LandingPage: React.FC = () => {
   const [currentAnonymousStep, setCurrentAnonymousStep] = useState<AnonymousStep>('Landing');
-  const [analysisMeetCount, setAnalysisMeetCount] = useState<number>(0);
-  const [analysisSumPeriod, setAnalysisSumPeriod] = useState<string>('');
-  const [analysisReplyInterval, setAnalysisReplyInterval] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false); // New state for loading
   const [calculatedResultData, setCalculatedResultData] = useState<any>(null); // State to store dynamic results
+  const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode
+  const toggleDarkMode = () => setIsDarkMode(prev => !prev); // Function to toggle dark mode
 
   const reviews = [
     { id: 1, content: "썸 때문에 밤새 고민했는데, 이젠 확신이 들어요!", author: "김*원" },
@@ -138,12 +137,7 @@ const LandingPage: React.FC = () => {
     };
   };
 
-  const handleAnalyzeChat = (imageData: string, meetCount: number, sumPeriod: string, replyInterval: string) => {
-    // Store image data in chatData state for now (no actual analysis)
-    // setAnalysisChatData(imageData); // No need to store if not used for direct display
-    setAnalysisMeetCount(meetCount);
-    setAnalysisSumPeriod(sumPeriod);
-    setAnalysisReplyInterval(replyInterval);
+  const handleAnalyzeChat = (_imageData: string, meetCount: number, sumPeriod: string, replyInterval: string) => {
     setIsLoading(true); // Start loading
 
     // Calculate results dynamically
@@ -268,7 +262,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className={styles.landingPage}>
-      <NavigationBar />
+      <NavigationBar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       {renderContent()}
       <footer className={styles.footer}>
         <p>&copy; 2024 Dopamin. All rights reserved.</p>
