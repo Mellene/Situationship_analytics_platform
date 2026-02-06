@@ -1,0 +1,109 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001; /* Above navbar */
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  background-color: var(--global-background-color);
+  color: var(--global-text-color);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative;
+  max-width: 500px;
+  width: 90%;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--global-text-color);
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: var(--navbar-hover-bg);
+}
+
+.title {
+  font-size: 2em;
+  color: var(--primary-pink);
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 1.1em;
+  margin-bottom: 30px;
+}
+
+.authOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.authButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: 1px solid var(--primary-pink);
+  background-color: var(--global-background-color);
+  color: var(--global-text-color);
+}
+
+.authButton:hover {
+  background-color: var(--light-pink);
+  color: var(--secondary-purple);
+  transform: translateY(-2px);
+}
+
+.authButton:nth-child(1) { /* Google button style */
+  border-color: #DB4437; /* Google red */
+  color: #DB4437;
+}
+.authButton:nth-child(1):hover {
+  background-color: #DB4437;
+  color: #fff;
+}
+
+.authIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.privacyMessage {
+  font-size: 0.9em;
+  color: #777; /* Neutral color for message */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

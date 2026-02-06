@@ -1,0 +1,74 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--navbar-bg);
+  color: var(--navbar-text);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbarBrand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: inherit; /* Inherit color from navbar */
+}
+
+.navbarNav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  margin-left: 2rem;
+}
+
+.navLink, .themeToggle {
+  color: inherit; /* Inherit color from navbar */
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.navLink:hover, .themeToggle:hover {
+  background-color: var(--navbar-hover-bg);
+  color: var(--navbar-hover-text);
+}
+
+.themeToggle {
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .navbarNav {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .navItem {
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  .navLink, .themeToggle {
+    display: block;
+    width: 100%;
+  }
+}

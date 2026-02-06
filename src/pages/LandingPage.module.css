@@ -1,18 +1,8 @@
-:root {
-  --primary-pink: #ff69b4; /* Hot pink */
-  --secondary-purple: #8a2be2; /* Blue violet */
-  --light-pink: #ffe4e1; /* Misty rose */
-  --light-purple: #e6e6fa; /* Lavender */
-  --text-dark: #333;
-  --text-light: #fff;
-  --bg-light: #f8f8f8;
-}
-
 .landingPage {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--text-dark);
+  color: var(--global-text-color); /* Use global text variable */
   line-height: 1.6;
-  background-color: var(--bg-light);
+  background-color: var(--global-background-color); /* Use global background variable */
   min-height: 100vh;
 }
 
@@ -63,7 +53,7 @@
   justify-content: center;
   flex-wrap: wrap;
   padding: 60px 20px;
-  background-color: var(--text-light);
+  background-color: var(--global-background-color); /* Use global background variable */
   border-bottom: 1px solid #eee;
   gap: 30px;
 }
@@ -76,7 +66,7 @@
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  background: var(--bg-light);
+  background: var(--global-background-color); /* Use global background variable */
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -98,7 +88,7 @@
 
 .trustLabel {
   font-size: 1.1em;
-  color: #555;
+  color: var(--global-text-color); /* Use global text variable */
 }
 
 .trustItem:last-child {
@@ -137,7 +127,7 @@
 .reviewCard {
   flex: 0 0 calc(100% - 80px); /* Make review cards take almost full width of the container, accounting for gap */
   max-width: 300px; /* Set a max-width for the cards */
-  background: var(--text-light);
+  background: var(--global-background-color); /* Use global background variable */
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -155,7 +145,7 @@
 
 .reviewContent {
   font-size: 1.1em;
-  color: var(--text-dark);
+  color: var(--global-text-color); /* Use global text variable */
   margin-bottom: 20px;
   flex-grow: 1;
 }
@@ -188,7 +178,7 @@
 }
 
 .featureCard {
-  background-color: var(--text-light);
+  background-color: var(--global-background-color);
   border-radius: 15px;
   padding: 40px;
   flex: 0 1 320px; /* Adjust width for responsiveness */
@@ -215,7 +205,35 @@
   font-size: 1.1em;
 }
 
-/* Media Queries for Responsiveness */
+/* Credibility Explanation Section */
+.credibilitySection {
+  padding: 80px 20px;
+  background-color: var(--global-background-color);
+  text-align: center;
+}
+
+.credibilityText {
+  max-width: 800px;
+  margin: 0 auto; /* Center the text block */
+  font-size: 1.1em;
+  line-height: 1.8;
+  color: var(--global-text-color);
+  text-align: left; /* Keep text left-aligned within its block */
+}
+
+.footer {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: var(--navbar-bg); /* Use navbar background for footer */
+  color: var(--navbar-text); /* Use navbar text color for footer */
+  font-size: 0.9em;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+  margin-bottom: 5px;
+}
+
 @media (max-width: 1024px) {
   /* Adjustments for medium-large screens if necessary */
   .trustItem {
@@ -244,6 +262,12 @@
   .reviewCard {
     flex: 0 0 calc(90% - 40px); /* Adjust card width for smaller screens, with gap */
   }
+  .credibilitySection {
+    padding: 60px 20px;
+  }
+  .credibilityText {
+    font-size: 1em;
+  }
 }
 
 @media (max-width: 480px) {
@@ -262,5 +286,11 @@
   }
   .featureCard {
     flex-basis: 100%;
+  }
+  .credibilitySection {
+    padding: 40px 15px;
+  }
+  .credibilityText {
+    font-size: 0.9em;
   }
 }

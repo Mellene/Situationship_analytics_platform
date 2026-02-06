@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; Removed */
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -11,6 +11,25 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Core Palette - Light Mode Defaults (from LandingPage.module.css original) */
+  --primary-pink: #ff69b4; /* Hot pink */
+  --secondary-purple: #8a2be2; /* Blue violet */
+  --light-pink: #ffe4e1; /* Misty rose */
+  --light-purple: #e6e6fa; /* Lavender */
+  --text-dark: #333;
+  --text-light: #fff;
+  --bg-light: #f8f8f8; /* Light background */
+
+  /* Global context variables derived from core palette */
+  --global-text-color: var(--text-dark);
+  --global-background-color: var(--bg-light);
+
+  /* Navbar theme variables */
+  --navbar-bg: var(--bg-light);
+  --navbar-text: var(--text-dark);
+  --navbar-hover-bg: #f0f0f0;
+  --navbar-hover-text: var(--primary-pink);
 }
 
 a {
@@ -24,10 +43,13 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /* display: flex; Removed as it was causing skew */
+  /* place-items: center; Removed as it was causing skew */
   min-width: 320px;
   min-height: 100vh;
+  /* Apply global background and text color to body by default */
+  background-color: var(--global-background-color);
+  color: var(--global-text-color);
 }
 
 h1 {

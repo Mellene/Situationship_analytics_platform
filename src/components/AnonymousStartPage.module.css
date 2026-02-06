@@ -1,0 +1,109 @@
+.container {
+  display: block; /* Change from flex to block */
+  min-height: calc(100vh - 80px); /* Adjust based on navbar height */
+  width: 100%; /* Ensure it uses full width */
+  max-width: 800px; /* Limit content width on very large screens */
+  margin: 0 auto; /* Center the container itself */
+  padding: 20px;
+  background-color: var(--global-background-color);
+  color: var(--global-text-color);
+  text-align: center; /* Center text and inline/inline-block elements */
+  position: relative;
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: 1px solid var(--primary-pink);
+  color: var(--primary-pink);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: var(--primary-pink);
+  color: var(--text-light);
+}
+
+.title {
+  font-size: 2.5em;
+  color: var(--secondary-purple);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  color: var(--global-text-color);
+  margin-bottom: 40px;
+}
+
+.ctaButton {
+  background-color: var(--primary-pink);
+  color: var(--text-light);
+  padding: 15px 40px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.4em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 50px;
+}
+
+.ctaButton:hover {
+  background-color: var(--secondary-purple);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.trustElements {
+  font-size: 0.9em;
+  color: #777;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.emphasis {
+  font-weight: bold;
+  color: var(--primary-pink);
+  margin-bottom: 10px;
+}
+
+.securityIcon {
+  font-size: 1.5em;
+  margin-top: 10px;
+  color: #66bb6a; /* Green lock */
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2em;
+  }
+  .subtitle {
+    font-size: 1em;
+  }
+  .ctaButton {
+    font-size: 1.2em;
+    padding: 12px 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8em;
+  }
+  .subtitle {
+    font-size: 0.9em;
+  }
+  .ctaButton {
+    font-size: 1em;
+    padding: 10px 25px;
+  }
+}

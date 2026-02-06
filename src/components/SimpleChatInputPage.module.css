@@ -1,0 +1,227 @@
+.container {
+  display: block; /* Change from flex to block */
+  padding: 20px;
+  background-color: var(--global-background-color);
+  color: var(--global-text-color);
+  min-height: calc(100vh - 80px); /* Adjust based on navbar height */
+  width: 100%; /* Ensure it uses full width */
+  max-width: 800px; /* Limit content width on very large screens */
+  margin: 0 auto; /* Center the container itself */
+  position: relative;
+  text-align: center; /* Center text and inline/inline-block elements */
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: 1px solid var(--primary-pink);
+  color: var(--primary-pink);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: var(--primary-pink);
+  color: var(--text-light);
+}
+
+.title {
+  font-size: 2.2em;
+  color: var(--secondary-purple);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.description {
+  font-size: 1em;
+  color: #777;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Direct Input Section */
+.directInput, .imageInputSection, .additionalQuestions {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 25px auto;
+  background-color: var(--bg-light);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.directInput h3, .imageInputSection h3, .additionalQuestions h3 {
+  color: var(--primary-pink);
+  font-size: 1.3em;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.templateButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.templateButtons button {
+  flex: 1 1 auto;
+  padding: 10px 15px;
+  border: 1px solid var(--light-pink);
+  background-color: var(--text-light);
+  color: var(--text-dark);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  min-width: 120px; /* Ensure buttons don't get too small */
+}
+
+.templateButtons button:hover {
+  background-color: var(--light-pink);
+  color: var(--secondary-purple);
+}
+
+.chatTextarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 15px;
+  border: 1px solid var(--light-purple);
+  border-radius: 8px;
+  font-size: 1em;
+  font-family: inherit;
+  resize: vertical;
+  background-color: var(--text-light);
+  color: var(--text-dark);
+  box-sizing: border-box;
+}
+
+/* Image Input Section */
+.imageUploadLabel {
+  display: block;
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px dashed var(--light-purple);
+  border-radius: 8px;
+  background-color: var(--global-background-color);
+  color: var(--secondary-purple);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  text-align: center;
+}
+
+.imageUploadLabel:hover {
+  border-color: var(--primary-pink);
+  background-color: var(--light-pink);
+}
+
+.imagePreviewContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.imagePreview {
+  max-width: 100%;
+  height: auto;
+  max-height: 250px; /* Limit height of preview */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  object-fit: contain;
+}
+
+
+.progressMessage {
+  margin-top: 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.progressMessage.valid {
+  color: #28a745; /* Green */
+}
+
+.progressMessage.invalid {
+  color: #dc3545; /* Red */
+}
+
+.questionGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.questionGroup label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--text-dark);
+}
+
+.questionGroup select {
+  padding: 10px;
+  border: 1px solid var(--light-purple);
+  border-radius: 8px;
+  font-size: 1em;
+  background-color: var(--text-light);
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.invalidField {
+  border-color: #dc3545 !important; /* Red border for invalid fields */
+}
+
+.analyzeButton {
+  background-color: var(--secondary-purple);
+  color: var(--text-light);
+  padding: 15px 40px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.4em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.analyzeButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.analyzeButton:hover:enabled {
+  background-color: var(--primary-pink);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2em;
+  }
+  .description {
+    font-size: 0.9em;
+  }
+  .directInput, .imageInputSection, .additionalQuestions {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8em;
+  }
+  .analyzeButton {
+    font-size: 1.2em;
+    padding: 12px 30px;
+  }
+}

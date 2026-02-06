@@ -1,0 +1,277 @@
+.container {
+  display: block; /* Change from flex to block */
+  padding: 20px;
+  background-color: var(--global-background-color);
+  color: var(--global-text-color);
+  min-height: calc(100vh - 80px); /* Adjust based on navbar height */
+  width: 100%; /* Ensure it uses full width */
+  max-width: 800px; /* Limit content width on very large screens */
+  margin: 0 auto; /* Center the container itself */
+  position: relative;
+  text-align: center; /* Center text and inline/inline-block elements */
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: 1px solid var(--primary-pink);
+  color: var(--primary-pink);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: var(--primary-pink);
+  color: var(--text-light);
+}
+
+.title {
+  font-size: 2.5em;
+  color: var(--secondary-purple);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.resultSection {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto; /* Center horizontally */
+  background-color: var(--bg-light);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Level 1: Core Results (Public) */
+.publicResult {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  gap: 20px; /* Space between items */
+  margin-bottom: 30px;
+}
+
+.resultItem {
+  flex: 1 1 30%; /* Allow items to grow, but keep a minimum width */
+  min-width: 120px; /* Ensure items don't get too small */
+  text-align: center;
+  padding: 10px 0;
+}
+
+.resultItem .label {
+  font-size: 1.1em;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.resultItem .value {
+  font-size: 2.2em; /* Slightly reduced for three items */
+  font-weight: bold;
+  color: var(--primary-pink);
+}
+
+.separator {
+  color: #ccc;
+  margin: 30px 0;
+  font-size: 1.2em; /* Make separator more prominent */
+  letter-spacing: 5px;
+}
+
+/* Level 2: Partial Analysis (Summary with Blur) */
+.partialResult {
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.resultSummaryItem {
+  background-color: var(--global-background-color); /* Lighter background for summary */
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.summaryLabel {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--secondary-purple);
+  margin-bottom: 5px;
+}
+
+.summaryValue {
+  font-size: 1em;
+  color: var(--global-text-color);
+  margin-bottom: 10px;
+}
+
+.blurText {
+  font-size: 0.9em;
+  color: #bbb;
+  filter: blur(2px); /* Apply subtle blur */
+  display: block;
+}
+
+/* Level 3: Locked Core Insights */
+.lockedResult {
+  margin-bottom: 30px;
+}
+
+.lockedItem {
+  font-size: 1.1em;
+  color: #bbb;
+  margin-bottom: 10px;
+  filter: blur(3px); /* Apply blur effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lockIcon {
+  margin-right: 10px;
+  color: #999;
+  filter: none; /* Do not blur the lock icon */
+}
+
+.ctaUnlockBelowBlur {
+  background-color: var(--light-purple);
+  color: var(--secondary-purple);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.ctaUnlockBelowBlur:hover {
+  background-color: var(--primary-pink);
+  color: var(--text-light);
+  transform: translateY(-2px);
+}
+
+.unlockButtonBottom {
+  background-color: var(--secondary-purple);
+  color: var(--text-light);
+  padding: 15px 40px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.4em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.unlockButtonBottom:hover {
+  background-color: var(--primary-pink);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.saveMessage {
+  font-size: 0.9em;
+  color: #aaa;
+  margin-top: 15px;
+}
+
+/* Algorithm Details Section - Summarized */
+.algorithmSection {
+  width: 100%;
+  max-width: 600px;
+  margin: 40px auto; /* Center horizontally, add top margin */
+  background-color: var(--global-background-color);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center text within the section */
+}
+
+.algorithmTitle {
+  font-size: 1.8em;
+  color: var(--secondary-purple);
+  margin-bottom: 20px;
+}
+
+.algorithmSummaryText {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: var(--global-text-color);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2em;
+  }
+  .description {
+    font-size: 1em;
+  }
+  .resultSection {
+    padding: 25px;
+  }
+  .resultItem .value {
+    font-size: 1.8em;
+  }
+  .unlockButtonBottom {
+    font-size: 1.2em;
+    padding: 12px 30px;
+  }
+  .algorithmSection {
+    padding: 25px;
+    margin-top: 30px;
+  }
+  .algorithmTitle {
+    font-size: 1.5em;
+  }
+  .algorithmSummaryText {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8em;
+  }
+  .resultItem .value {
+    font-size: 1.8em;
+  }
+  .publicResult {
+    flex-direction: column; /* Stack items on very small screens */
+  }
+  .resultSummaryItem {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+  }
+  .summaryLabel, .summaryValue {
+    font-size: 0.9em;
+  }
+  .lockedItem {
+    font-size: 1em;
+  }
+  .ctaUnlockBelowBlur, .unlockButtonBottom {
+    font-size: 1em;
+    padding: 10px 25px;
+  }
+  .algorithmTitle {
+    font-size: 1.3em;
+  }
+  .algorithmSummaryText {
+    font-size: 0.9em;
+  }
+}
