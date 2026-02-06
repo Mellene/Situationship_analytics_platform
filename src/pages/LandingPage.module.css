@@ -60,23 +60,29 @@
 
 .trustSection {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   padding: 60px 20px;
   background-color: var(--text-light);
   border-bottom: 1px solid #eee;
+  gap: 30px;
 }
 
 .trustItem {
-  flex: 1;
-  min-width: 280px;
-  margin: 20px;
+  flex: 1 1 300px; /* Allow items to grow/shrink, with a preferred basis of 300px */
+  max-width: 480px; /* Limit max width on very large screens for better visual balance */
+  margin: 0;
   text-align: center;
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   background: var(--bg-light);
   transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 180px; /* Ensure a minimum height for equal sizing */
+  position: relative;
 }
 
 .trustItem:hover {
@@ -93,6 +99,72 @@
 .trustLabel {
   font-size: 1.1em;
   color: #555;
+}
+
+.trustItem:last-child {
+  flex: 1 1 100%; /* Make the carousel item take full width on its row */
+  max-width: 100%; /* Ensure it spans fully */
+  margin-top: 40px;
+  min-height: unset;
+  box-shadow: none;
+  background: none;
+  padding: 0;
+}
+
+/* Review Carousel Styles */
+.reviewCarouselContainer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 15px 0;
+}
+
+.reviewCarousel {
+  display: flex;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  gap: 40px; /* Space between review cards */
+  padding-bottom: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.reviewCarousel::-webkit-scrollbar {
+  display: none;
+}
+
+.reviewCard {
+  flex: 0 0 calc(100% - 80px); /* Make review cards take almost full width of the container, accounting for gap */
+  max-width: 300px; /* Set a max-width for the cards */
+  background: var(--text-light);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 4px solid var(--primary-pink);
+  
+  /* Make it square */
+  min-height: unset; /* Remove previous min-height */
+  aspect-ratio: 1 / 1; /* Maintain 1:1 aspect ratio */
+  box-sizing: border-box; /* Include padding in the total width/height */
+}
+
+.reviewContent {
+  font-size: 1.1em;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.reviewAuthor {
+  font-size: 0.95em;
+  color: #777;
+  font-weight: 500;
+  text-align: right;
 }
 
 .featuresSection {
@@ -143,6 +215,14 @@
   font-size: 1.1em;
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  /* Adjustments for medium-large screens if necessary */
+  .trustItem {
+    max-width: 45%; /* Allow two items per row to be slightly larger */
+  }
+}
+
 @media (max-width: 768px) {
   .heroTitle {
     font-size: 2.5em;
@@ -154,8 +234,15 @@
   .sectionTitle {
     font-size: 2em;
   }
+  .trustItem {
+    flex: 1 1 45%; /* Two items per row */
+    max-width: 48%; /* Prevent from touching */
+  }
   .featureCard {
     flex-basis: 90%;
+  }
+  .reviewCard {
+    flex: 0 0 calc(90% - 40px); /* Adjust card width for smaller screens, with gap */
   }
 }
 
@@ -167,7 +254,13 @@
     font-size: 2.2em;
   }
   .trustItem {
-    min-width: unset;
+    flex: 1 1 100%; /* Stack items on very small screens */
+    max-width: 100%;
+  }
+  .reviewCard {
+    flex: 0 0 calc(100% - 40px); /* Make cards almost full width on very small screens, accounting for gap */
+  }
+  .featureCard {
     flex-basis: 100%;
   }
 }

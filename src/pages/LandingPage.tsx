@@ -1,7 +1,17 @@
 import React from 'react';
 import styles from './LandingPage.module.css';
+import NumberAnimation from '../components/NumberAnimation';
+import ReviewCarousel from '../components/ReviewCarousel';
 
 const LandingPage: React.FC = () => {
+  const reviews = [
+    { id: 1, content: "썸 때문에 밤새 고민했는데, 이젠 확신이 들어요!", author: "김*원" },
+    { id: 2, content: "분석 결과가 너무 정확해서 소름 돋았어요. 덕분에 좋은 인연 만났습니다!", author: "이*정" },
+    { id: 3, content: "애매했던 관계에 명확한 답을 얻었어요. 정말 유용합니다!", author: "박*호" },
+    { id: 4, content: "썸 전문가가 된 기분이에요. 주변 친구들에게도 추천하고 있어요!", author: "최*영" },
+    { id: 5, content: "간단한 질문 몇 개로 이렇게 깊이 있는 분석이라니 놀랍네요.", author: "정*민" },
+  ];
+
   return (
     <div className={styles.landingPage}>
       {/* Hero Section */}
@@ -13,16 +23,15 @@ const LandingPage: React.FC = () => {
       {/* Trust Elements Section */}
       <section className={styles.trustSection}>
         <div className={styles.trustItem}>
-          <p className={styles.trustValue}>95%</p>
+          <p className={styles.trustValue}><NumberAnimation targetValue={95} suffix="%" /></p>
           <p className={styles.trustLabel}>분석 정확도</p>
         </div>
         <div className={styles.trustItem}>
-          <p className={styles.trustValue}>10,000+</p>
+          <p className={styles.trustValue}><NumberAnimation targetValue={10000} suffix="+" /></p>
           <p className={styles.trustLabel}>사용자</p>
         </div>
         <div className={styles.trustItem}>
-          <p className={styles.trustValue}>"썸 때문에 밤새 고민했는데, 이젠 확신이 들어요!"</p>
-          <p className={styles.trustLabel}>- 사용자 후기</p>
+          <ReviewCarousel reviews={reviews} />
         </div>
       </section>
 
