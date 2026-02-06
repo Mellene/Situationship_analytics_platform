@@ -1,0 +1,173 @@
+:root {
+  --primary-pink: #ff69b4; /* Hot pink */
+  --secondary-purple: #8a2be2; /* Blue violet */
+  --light-pink: #ffe4e1; /* Misty rose */
+  --light-purple: #e6e6fa; /* Lavender */
+  --text-dark: #333;
+  --text-light: #fff;
+  --bg-light: #f8f8f8;
+}
+
+.landingPage {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-dark);
+  line-height: 1.6;
+  background-color: var(--bg-light);
+  min-height: 100vh;
+}
+
+.heroSection {
+  background: linear-gradient(135deg, var(--primary-pink), var(--secondary-purple));
+  color: var(--text-light);
+  padding: 80px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.heroTitle {
+  font-size: 3.5em;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.highlight {
+  color: var(--light-pink); /* Lighter shade for emphasis */
+}
+
+.ctaButton {
+  background-color: var(--light-pink);
+  color: var(--secondary-purple);
+  padding: 15px 40px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.4em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ctaButton:hover {
+  background-color: var(--text-light);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.trustSection {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 60px 20px;
+  background-color: var(--text-light);
+  border-bottom: 1px solid #eee;
+}
+
+.trustItem {
+  flex: 1;
+  min-width: 280px;
+  margin: 20px;
+  text-align: center;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: var(--bg-light);
+  transition: transform 0.3s ease;
+}
+
+.trustItem:hover {
+  transform: translateY(-5px);
+}
+
+.trustValue {
+  font-size: 2.8em;
+  font-weight: 700;
+  color: var(--primary-pink);
+  margin-bottom: 10px;
+}
+
+.trustLabel {
+  font-size: 1.1em;
+  color: #555;
+}
+
+.featuresSection {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: var(--light-purple);
+}
+
+.sectionTitle {
+  font-size: 2.5em;
+  color: var(--secondary-purple);
+  margin-bottom: 60px;
+  font-weight: 700;
+}
+
+.featureCards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.featureCard {
+  background-color: var(--text-light);
+  border-radius: 15px;
+  padding: 40px;
+  flex: 0 1 320px; /* Adjust width for responsiveness */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: all 0.3s ease;
+  border-top: 5px solid var(--primary-pink);
+}
+
+.featureCard:hover {
+  transform: translateY(-7px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.featureCard h3 {
+  color: var(--secondary-purple);
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.featureCard p {
+  color: #666;
+  font-size: 1.1em;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.5em;
+  }
+  .ctaButton {
+    font-size: 1.2em;
+    padding: 12px 30px;
+  }
+  .sectionTitle {
+    font-size: 2em;
+  }
+  .featureCard {
+    flex-basis: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2em;
+  }
+  .trustValue {
+    font-size: 2.2em;
+  }
+  .trustItem {
+    min-width: unset;
+    flex-basis: 100%;
+  }
+}
