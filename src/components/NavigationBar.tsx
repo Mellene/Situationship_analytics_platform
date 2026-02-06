@@ -11,6 +11,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ isDarkMode, toggleDarkMod
     <nav className={`${styles.navbar} ${isDarkMode ? styles.dark : ''}`}>
       <div className={styles.navbarBrand}>Dopamin</div>
       <ul className={styles.navbarNav}>
+        <li>
+          <button onClick={toggleDarkMode} className={styles.modeToggle}>
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+          </button>
+        </li>
       </ul>
     </nav>
   );
