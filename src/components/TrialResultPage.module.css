@@ -9,6 +9,7 @@
   margin: 0 auto; /* Center the container itself */
   position: relative;
   text-align: center; /* Center text and inline/inline-block elements */
+  overflow-x: hidden;
 }
 
 .backButton {
@@ -47,7 +48,7 @@
   max-width: 600px;
   margin: 0 auto; /* Center horizontally */
   background-color: var(--bg-light);
-  padding: 30px;
+  padding: 20px;
   border-radius: 15px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
@@ -90,7 +91,7 @@
 /* Level 2: Partial Analysis (Summary with Blur) */
 .partialResult {
   margin-bottom: 30px;
-  text-align: left;
+  text-align: center;
 }
 
 .resultSummaryItem {
@@ -195,7 +196,7 @@
   max-width: 600px;
   margin: 40px auto; /* Center horizontally, add top margin */
   background-color: var(--global-background-color);
-  padding: 30px;
+  padding: 20px;
   border-radius: 15px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   text-align: center; /* Center text within the section */
@@ -216,11 +217,15 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 15px; /* Slightly reduce padding on tablets */
+  }
   .title {
     font-size: 2em;
   }
   .description {
     font-size: 1em;
+    line-height: 1.5; /* Improve readability */
   }
   .resultSection {
     padding: 25px;
@@ -245,6 +250,15 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 10px; /* Further reduce padding on mobile */
+  }
+  .backButton {
+    top: 10px; /* Adjust position for smaller screens */
+    left: 10px;
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
   .title {
     font-size: 1.8em;
   }
@@ -258,8 +272,12 @@
     padding: 10px 15px;
     margin-bottom: 10px;
   }
-  .summaryLabel, .summaryValue {
+  .summaryLabel {
+    font-size: 1em; /* Slightly increase for readability */
+  }
+  .summaryValue {
     font-size: 0.9em;
+    line-height: 1.5; /* Improve readability */
   }
   .lockedItem {
     font-size: 1em;

@@ -9,6 +9,7 @@
   margin: 0 auto; /* Center the container itself */
   position: relative;
   text-align: center; /* Center text and inline/inline-block elements */
+  overflow-x: hidden;
 }
 
 .backButton {
@@ -51,10 +52,10 @@
   max-width: 600px;
   margin: 0 auto 25px auto;
   background-color: var(--bg-light);
-  padding: 25px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  text-align: left;
+  text-align: center;
 }
 
 .directInput h3, .imageInputSection h3, .additionalQuestions h3 {
@@ -205,23 +206,110 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 15px; /* Slightly reduce padding on tablets */
+  }
+  .backButton {
+    top: 15px;
+    left: 15px;
+    padding: 7px 14px;
+    font-size: 0.95em;
+  }
   .title {
     font-size: 2em;
   }
   .description {
     font-size: 0.9em;
+    line-height: 1.5;
   }
   .directInput, .imageInputSection, .additionalQuestions {
     padding: 20px;
+    margin-bottom: 20px; /* Reduce space between sections */
   }
-}
-
-@media (max-width: 480px) {
-  .title {
-    font-size: 1.8em;
+  .directInput h3, .imageInputSection h3, .additionalQuestions h3 {
+    font-size: 1.2em;
+  }
+  .templateButtons button {
+    font-size: 0.9em;
+    padding: 8px 12px;
+    min-width: 100px;
+  }
+  .chatTextarea {
+    font-size: 0.9em;
+    min-height: 120px;
+  }
+  .imageUploadLabel {
+    font-size: 0.9em;
+    padding: 12px 15px;
+  }
+  .imagePreviewContainer {
+    margin-top: 15px;
+  }
+  .imagePreview {
+    max-height: 200px;
+  }
+  .progressMessage {
+    font-size: 0.8em;
+  }
+  .questionGroup label {
+    font-size: 0.9em;
+  }
+  .questionGroup select {
+    font-size: 0.9em;
+    padding: 8px;
   }
   .analyzeButton {
     font-size: 1.2em;
     padding: 12px 30px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px; /* Further reduce padding on mobile */
+  }
+  .backButton {
+    top: 10px; /* Adjust position for smaller screens */
+    left: 10px;
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+  .title {
+    font-size: 1.8em;
+  }
+  .directInput, .imageInputSection, .additionalQuestions {
+    padding: 15px;
+  }
+  .directInput h3, .imageInputSection h3, .additionalQuestions h3 {
+    font-size: 1.1em;
+  }
+  .templateButtons {
+    gap: 8px;
+  }
+  .templateButtons button {
+    flex: 1 1 45%; /* Allow two buttons per row */
+    font-size: 0.85em;
+    padding: 7px 10px;
+    min-width: unset;
+  }
+  .chatTextarea {
+    font-size: 0.85em;
+    min-height: 100px;
+  }
+  .imageUploadLabel {
+    font-size: 0.85em;
+    padding: 10px 12px;
+  }
+  .imagePreview {
+    max-height: 150px;
+  }
+  .questionGroup label, .questionGroup select {
+    font-size: 0.85em;
+  }
+  .analyzeButton {
+    font-size: 1.1em;
+    padding: 10px 25px;
+    margin-bottom: 20px;
   }
 }

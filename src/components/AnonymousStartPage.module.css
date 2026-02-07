@@ -9,6 +9,7 @@
   color: var(--global-text-color);
   text-align: center; /* Center text and inline/inline-block elements */
   position: relative;
+  overflow-x: hidden;
 }
 
 .backButton {
@@ -83,19 +84,38 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 15px; /* Slightly reduce padding on tablets */
+  }
   .title {
     font-size: 2em;
   }
   .subtitle {
     font-size: 1em;
+    line-height: 1.5; /* Improve readability */
   }
   .ctaButton {
     font-size: 1.2em;
     padding: 12px 30px;
   }
+  .backButton {
+    top: 15px;
+    left: 15px;
+    padding: 7px 14px;
+    font-size: 0.95em;
+  }
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 10px; /* Further reduce padding on mobile */
+  }
+  .backButton {
+    top: 10px; /* Adjust position for smaller screens */
+    left: 10px;
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
   .title {
     font-size: 1.8em;
   }
