@@ -173,7 +173,8 @@ const LandingPage: React.FC = () => {
           <>
             {/* Hero Section */}
             <section className={styles.heroSection}>
-              <h1 className={styles.heroTitle}>지금 썸, <span className={styles.highlight}>확신</span> 있나요?</h1>
+              <h1 className={styles.heroTitle}>당신이 생각하는 그 사람의 행동이,</h1>
+              <h1 className={styles.heroTitle}>썸 일거라는 <span className={styles.highlight}>확신</span> 있나요?</h1>
               <button className={styles.ctaButton} onClick={handleStartAnalysisClick}>썸 분석 시작하기</button>
             </section>
 
