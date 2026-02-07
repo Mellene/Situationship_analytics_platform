@@ -40,8 +40,6 @@ const LandingPage: React.FC = () => {
   const [currentAnonymousStep, setCurrentAnonymousStep] = useState<AnonymousStep>('Landing');
   const [isLoading, setIsLoading] = useState(false); // New state for loading
   const [calculatedResultData, setCalculatedResultData] = useState<any>(null); // State to store dynamic results
-  const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode
-  const toggleDarkMode = () => setIsDarkMode(prev => !prev); // Function to toggle dark mode
 
   const reviews = [
     { id: 1, content: "썸 때문에 밤새 고민했는데, 이젠 확신이 들어요!", author: "김*원" },
@@ -262,7 +260,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className={styles.landingPage}>
-      <NavigationBar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <NavigationBar />
       {renderContent()}
       <footer className={styles.footer}>
         <p>&copy; 2024 Dopamin. All rights reserved.</p>

@@ -1,21 +1,11 @@
 import React from 'react';
 import styles from './NavigationBar.module.css';
 
-interface NavigationBarProps {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
-}
-
-const NavigationBar: React.FC<NavigationBarProps> = ({ isDarkMode, toggleDarkMode }) => {
+const NavigationBar: React.FC = () => {
   return (
-    <nav className={`${styles.navbar} ${isDarkMode ? styles.dark : ''}`}>
+    <nav className={styles.navbar}>
       <div className={styles.navbarBrand}>Dopamin</div>
       <ul className={styles.navbarNav}>
-        <li>
-          <button onClick={toggleDarkMode} className={styles.modeToggle}>
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-          </button>
-        </li>
       </ul>
     </nav>
   );

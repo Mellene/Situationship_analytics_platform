@@ -28,7 +28,7 @@
   margin-left: 2rem;
 }
 
-.navLink, .themeToggle {
+.navLink {
   color: inherit; /* Inherit color from navbar */
   text-decoration: none;
   font-size: 1rem;
@@ -40,13 +40,9 @@
   border: none;
 }
 
-.navLink:hover, .themeToggle:hover {
+.navLink:hover {
   background-color: var(--navbar-hover-bg);
   color: var(--navbar-hover-text);
-}
-
-.themeToggle {
-  font-weight: bold;
 }
 
 /* Responsive adjustments */
