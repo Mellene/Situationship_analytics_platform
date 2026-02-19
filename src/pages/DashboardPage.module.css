@@ -20,6 +20,84 @@
   color: #666;
 }
 
+/* 프로필 드롭다운 섹션 */
+.profileContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #ff69b4, #8a2be2);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: white;
+  min-width: 160px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 8px 0;
+  z-index: 100;
+  border: 1px solid #eee;
+  animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.menuItem {
+  width: 100%;
+  padding: 12px 20px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 0.95em;
+  color: #444;
+  cursor: pointer;
+  display: block;
+}
+
+.menuItem:hover {
+  background-color: #fdf2f8;
+  color: #ff69b4;
+}
+
+.menuDivider {
+  height: 1px;
+  background-color: #eee;
+  margin: 8px 0;
+}
+
+.logoutItem {
+  color: #999;
+}
+
+.logoutItem:hover {
+  color: #ff4d4f;
+  background-color: #fff1f0;
+}
+
 /* 섹션 B: 최근 분석 요약 */
 .recentCard {
   background: linear-gradient(135deg, #ff69b4, #8a2be2);

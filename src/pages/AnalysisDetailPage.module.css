@@ -1,0 +1,222 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 120px; /* Floating CTA 공간 */
+  background-color: #fff;
+  min-height: 100vh;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* A. Hero Section */
+.hero {
+  background: linear-gradient(180deg, #fff0f6 0%, #ffffff 100%);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.gaugeContainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 30px;
+}
+
+.scoreText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.scoreNumber {
+  font-size: 3.5em;
+  font-weight: 800;
+  color: #ff69b4;
+  display: block;
+}
+
+.scoreLabel {
+  font-size: 1.1em;
+  color: #888;
+  font-weight: 600;
+}
+
+.heroTitle {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.heroSubtitle {
+  font-size: 1.1em;
+  color: #666;
+  line-height: 1.6;
+  padding: 0 20px;
+}
+
+.highlight {
+  color: #8a2be2;
+  font-weight: bold;
+}
+
+/* B. Free Summary Card */
+.summarySection {
+  padding: 20px;
+}
+
+.card {
+  background: #fdf2f8;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-left: 5px solid #ff69b4;
+}
+
+.cardTitle {
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* C & D. Paywall & Skeleton */
+.paywallWrapper {
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.blurredArea {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.6;
+}
+
+.paywallOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 80%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.lockIcon {
+  font-size: 3em;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.lockIcon.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
+}
+
+.paywallText {
+  font-weight: 700;
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Skeleton UI */
+.skeletonCard {
+  background: #f9f9f9;
+  border-radius: 16px;
+  height: 150px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.skeletonLine {
+  height: 12px;
+  background: #eee;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* E. Floating CTA */
+.floatingCta {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 560px;
+  background: #ff69b4;
+  color: white;
+  padding: 18px;
+  border-radius: 18px;
+  border: none;
+  font-size: 1.1em;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.floatingCta:hover {
+  background: #ff1493;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.floatingCta.highlight {
+  animation: pulse 0.5s infinite alternate;
+}
+
+@keyframes pulse {
+  from { box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4); }
+  to { box-shadow: 0 0 40px rgba(255, 105, 180, 0.8); transform: translateX(-50%) scale(1.02); }
+}
+
+/* Bottom Sheet */
+.bottomSheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 30px 30px 0 0;
+  padding: 40px 20px;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+  z-index: 1000;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottomSheet.open {
+  transform: translateY(0);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  display: none;
+}
+
+.overlay.open {
+  display: block;
+}
