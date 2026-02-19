@@ -23,7 +23,7 @@ const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ reviews }) => {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
-    const itemWidthWithGap = (carousel.children[0]?.clientWidth || 0) + 40; // Card width + gap (from CSS)
+    const itemWidthWithGap = (carousel.children[0] as HTMLElement)?.offsetWidth + 40 || 340; // Default fallback width
     const originalReviewsCount = reviews.length;
 
     const autoScroll = setInterval(() => {
@@ -45,6 +45,7 @@ const ReviewCarousel: React.FC<ReviewCarouselProps> = ({ reviews }) => {
   }, [reviews, pauseBetweenScroll]); // currentIndexRef is not a dependency as its .current property is mutable
 
   const blurId = (id: string) => {
+    if (!id) return '';
     if (id.length <= 2) return '*'.repeat(id.length);
     return id.substring(0, 1) + '*'.repeat(id.length - 2) + id.substring(id.length - 1);
   };
