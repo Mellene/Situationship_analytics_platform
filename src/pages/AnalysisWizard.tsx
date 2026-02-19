@@ -57,9 +57,68 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
     });
   };
 
+  const calculateFinalScore = () => {
+    let score = 50; // 기본 시작 점수
+
+    // 1. MD (Meeting Density & Quality) - 30점 만점
+    const mCount = formData.meetingCount || 0;
+    const mTypeBonus = formData.meetingType === '항상 1:1로 만남' ? 5 : 0;
+    const distanceAdjustment = formData.physicalDistance === '장거리' || formData.physicalDistance === '해외' ? 1.5 : 1.0;
+    const mdScore = Math.min(30, (mCount * 5 * distanceAdjustment) + mTypeBonus);
+    
+    // 2. RV (Response & Reactivity) - 25점 만점
+    const rvMap: Record<string, number> = {
+      '칼답/실시간': 25,
+      '1~2시간': 20,
+      '반나절': 12,
+      '하루 1~2회': 5,
+      '며칠에 한 번': 0
+    };
+    let rvScore = rvMap[formData.contactFrequency] || 10;
+    if (formData.activeTime === '밤~새벽') rvScore += 3; // 친밀 시간대 보너스
+
+    // 3. IN (Initiative - 상대방의 주도성) - 20점 만점
+    const initiativeMap: Record<string, number> = {
+      '상대가 주로 함': 20,
+      '비슷함': 15,
+      '내가 주로 함': 5
+    };
+    const inScore = (initiativeMap[formData.initiativeRatio] || 10) + 
+                    (formData.meetingInitiative === '주로 상대방' ? 5 : 0);
+
+    // 4. PS (Progress Signals - 행동 지표) - 25점 만점
+    const signalScore = formData.behavioralSignals.length * 4; // 개당 4점
+    const courseBonus = formData.dateCourses.includes('저녁 식사와 술') ? 3 : 0;
+    const psScore = Math.min(25, signalScore + courseBonus);
+
+    // 총합 계산
+    score = mdScore + rvScore + inScore + psScore;
+
+    // 필터링 및 최종 가중치 (상대 연애 유무)
+    if (formData.hasPartner === '연인 있음') score *= 0.1;
+    else if (formData.hasPartner === '애매함') score *= 0.7;
+
+    const finalScore = Math.round(Math.max(0, Math.min(100, score)));
+    
+    // 단계 결정
+    let stage = '관심 낮음';
+    if (finalScore >= 90) stage = '연애 직전';
+    else if (finalScore >= 75) stage = '썸 확정';
+    else if (finalScore >= 60) stage = '썸 가능';
+    else if (finalScore >= 40) stage = '호감 단계';
+    else if (formData.hasPartner === '연인 있음') stage = '불가능(차단 권장)';
+
+    return { finalScore, stage };
+  };
+
   const handleSubmit = async () => {
     if (!session?.user) return;
     setIsSubmitting(true);
+
+    const { finalScore, stage } = calculateFinalScore();
+    const summary = `${formData.counterpartName}님과의 관계는 현재 '${stage}' 단계입니다. ${
+      finalScore > 70 ? '긍정적인 신호가 많이 포착되었습니다.' : '조금 더 지켜볼 필요가 있는 관계입니다.'
+    }`;
 
     try {
       // 1. Create or get Counterpart
@@ -77,9 +136,9 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
         .insert([{
           user_id: session.user.id,
           counterpart_id: cpData.id,
-          score_total: Math.floor(Math.random() * 40) + 40, // Mock score for now
-          stage: '분석 중',
-          summary_public: '상세 분석을 위해 데이터를 수집했습니다.',
+          score_total: finalScore,
+          stage: stage,
+          summary_public: summary,
           relationship_context: formData.relationshipContext,
           physical_distance: formData.physicalDistance,
           has_partner: formData.hasPartner,
