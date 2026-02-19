@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './DashboardPage.module.css';
+import AnalysisWizard from './AnalysisWizard'; // Import Wizard
 
 interface DashboardPageProps {
   profile: any;
@@ -13,6 +14,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
   const [latestAnalysis, setLatestAnalysis] = useState<any>(null);
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showWizard, setShowWizard] = useState(false); // Wizard visibility state
 
   useEffect(() => {
     fetchDashboardData();
@@ -21,6 +23,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
   const fetchDashboardData = async () => {
     if (!session?.user) return;
     setLoading(true);
+    // ... (기존 Fetch 로직 유지)
 
     try {
       // Fetch latest analysis with counterpart info
@@ -69,6 +72,18 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
     onLogout();
   };
 
+  if (showWizard) {
+    return (
+      <AnalysisWizard 
+        onComplete={() => {
+          setShowWizard(false);
+          fetchDashboardData();
+        }}
+        onCancel={() => setShowWizard(false)}
+      />
+    );
+  }
+
   if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>대시보드 데이터를 불러오는 중...</div>;
 
   return (
@@ -99,20 +114,20 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
             <p className={styles.summary}>"{latestAnalysis.summary_public}"</p>
             <div className={styles.cardButtons}>
               <button className={styles.primaryBtn} onClick={() => alert('리포트 보기 - 구현 준비 중')}>리포트 보기</button>
-              <button className={styles.secondaryBtn} onClick={() => alert('재분석 - 구현 준비 중')}>다시 분석하기</button>
+              <button className={styles.secondaryBtn} onClick={() => setShowWizard(true)}>다시 분석하기</button>
             </div>
           </div>
         ) : (
           <div className={styles.recentCard} style={{ textAlign: 'center', background: '#f5f5f5', color: '#666', boxShadow: 'none' }}>
             <p>아직 분석 결과가 없습니다. 첫 분석을 시작해보세요!</p>
-            <button className={styles.primaryBtn} style={{ marginTop: '15px', color: '#8a2be2' }} onClick={() => alert('새 분석 시작')}>새 분석 시작하기</button>
+            <button className={styles.primaryBtn} style={{ marginTop: '15px', color: '#8a2be2' }} onClick={() => setShowWizard(true)}>새 분석 시작하기</button>
           </div>
         )}
       </section>
 
       {/* 섹션 C: Quick Actions */}
       <section className={styles.quickActions}>
-        <div className={styles.actionCard} onClick={() => alert('새 분석')}>
+        <div className={styles.actionCard} onClick={() => setShowWizard(true)}>
           <h3>새 분석 시작</h3>
           <p style={{ fontSize: '0.9em', color: '#777' }}>대화 이미지를 업로드하세요</p>
         </div>
