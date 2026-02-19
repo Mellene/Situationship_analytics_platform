@@ -87,6 +87,26 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
     onLogout();
   };
 
+  const handleDeleteAnalysis = async (e: React.MouseEvent, id: string) => {
+    e.stopPropagation(); // Prevent opening detail page
+    if (!window.confirm('이 분석 기록을 삭제하시겠습니까?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('analyses')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      // Refresh data after deletion
+      fetchDashboardData();
+    } catch (err) {
+      console.error('Error deleting analysis:', err);
+      alert('삭제 중 오류가 발생했습니다.');
+    }
+  };
+
   if (showWizard) {
     return (
       <AnalysisWizard 
@@ -200,25 +220,33 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
                     <section className={styles.historySection}>
                       <h2>최근 분석 리스트</h2>
                       <div className={styles.historyList}>
-                        <div className={`${styles.historyRow} ${styles.historyHeader}`}>
-                          <div>상대방</div>
-                          <div>날짜</div>
-                          <div>점수</div>
-                          <div>단계</div>
-                          <div>언락 여부</div>
-                        </div>
-                        {history.length > 0 ? (
-                          history.map((item) => (
-                            <div key={item.id} className={styles.historyRow} onClick={() => setSelectedAnalysisId(item.id)}>
-                              <div style={{ fontWeight: '600' }}>{item.counterparts?.nickname}</div>
-                              <div style={{ color: '#777', fontSize: '0.9em' }}>{new Date(item.created_at).toLocaleDateString()}</div>
-                              <div style={{ color: '#8a2be2', fontWeight: 'bold' }}>{item.score_total}</div>
-                              <div>{item.stage}</div>
-                              <div>{item.is_unlocked ? '✅' : '🔒'}</div>
-                            </div>
-                          ))
-              
-            ) : (
+                                  <div className={`${styles.historyRow} ${styles.historyHeader}`}>
+                                    <div>상대방</div>
+                                    <div>날짜</div>
+                                    <div>점수</div>
+                                    <div>단계</div>
+                                    <div>언락 여부</div>
+                                    <div style={{textAlign: 'center'}}>삭제</div>
+                                  </div>
+                                  {history.length > 0 ? (
+                                    history.map((item) => (
+                                      <div key={item.id} className={styles.historyRow} onClick={() => setSelectedAnalysisId(item.id)}>
+                                        <div style={{ fontWeight: '600' }}>{item.counterparts?.nickname}</div>
+                                        <div style={{ color: '#777', fontSize: '0.9em' }}>{new Date(item.created_at).toLocaleDateString()}</div>
+                                        <div style={{ color: '#8a2be2', fontWeight: 'bold' }}>{item.score_total}</div>
+                                        <div>{item.stage}</div>
+                                        <div>{item.is_unlocked ? '✅' : '🔒'}</div>
+                                                        <button 
+                                                          className={styles.deleteBtn} 
+                                                          onClick={(e) => handleDeleteAnalysis(e, item.id)}
+                                                          title="삭제"
+                                                        >
+                                                          <span className="material-symbols-outlined">delete</span>
+                                                        </button>
+                                        
+                                      </div>
+                                    ))
+                                    ) : (
               <div style={{ padding: '30px', textAlign: 'center', color: '#999' }}>히스토리가 없습니다.</div>
             )}
           </div>

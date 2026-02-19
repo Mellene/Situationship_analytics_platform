@@ -8,6 +8,26 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+.deleteTopBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  background: none;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.deleteTopBtn:hover {
+  color: #ff4d4f;
+  transform: scale(1.1);
+}
+
 /* A. Hero Section */
 .hero {
   background: linear-gradient(180deg, #fff0f6 0%, #ffffff 100%);

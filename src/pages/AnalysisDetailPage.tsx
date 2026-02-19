@@ -43,12 +43,33 @@ const AnalysisDetailPage: React.FC<AnalysisDetailPageProps> = ({ analysisId, onB
     setTimeout(() => setIsCtaHighlighted(false), 2000);
   };
 
+  const handleDelete = async () => {
+    if (!window.confirm('이 분석 리포트를 삭제하시겠습니까? 삭제된 데이터는 복구할 수 없습니다.')) return;
+
+    try {
+      const { error } = await supabase
+        .from('analyses')
+        .delete()
+        .eq('id', analysisId);
+
+      if (error) throw error;
+      onBack(); // Go back to dashboard after deletion
+    } catch (err) {
+      console.error('Error deleting analysis:', err);
+      alert('삭제 중 오류가 발생했습니다.');
+    }
+  };
+
   if (loading) return <div style={{padding: '50px', textAlign: 'center'}}>리포트를 생성 중입니다...</div>;
   if (!analysis) return <div>리포트를 찾을 수 없습니다.</div>;
 
   return (
     <div className={styles.container}>
       <button onClick={onBack} style={{position: 'absolute', top: 20, left: 20, border: 'none', background: 'none', fontSize: '1.2em', cursor: 'pointer'}}>←</button>
+      
+      <button className={styles.deleteTopBtn} onClick={handleDelete} title="분석 삭제">
+        <span className="material-symbols-outlined">delete</span>
+      </button>
 
       {/* A. Hero Section */}
       <section className={styles.hero}>

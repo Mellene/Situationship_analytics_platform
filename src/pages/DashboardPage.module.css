@@ -201,7 +201,7 @@
 
 .historyRow {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr;
+  grid-template-columns: 2fr 1.2fr 1fr 1.2fr 1fr 0.5fr; /* 6개 컬럼으로 조정 */
   padding: 15px 20px;
   border-bottom: 1px solid #eee;
   align-items: center;
@@ -210,6 +210,24 @@
 
 .historyRow:hover {
   background: #fdf2f8;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteBtn:hover {
+  color: #ff4d4f;
+  transform: scale(1.2);
 }
 
 .historyHeader {
