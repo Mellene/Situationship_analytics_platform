@@ -3,7 +3,8 @@ import { supabase } from '../supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './DashboardPage.module.css';
 import AnalysisWizard from './AnalysisWizard';
-import AnalysisDetailPage from './AnalysisDetailPage'; // Import Detail Page
+import AnalysisDetailPage from './AnalysisDetailPage';
+import ComparisonPage from './ComparisonPage'; // Import Comparison Page
 import Footer from '../components/Footer';
 
 interface DashboardPageProps {
@@ -18,7 +19,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
   const [loading, setLoading] = useState(true);
   const [showWizard, setShowWizard] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedAnalysisId, setSelectedAnalysisId] = useState<string | null>(null); // Detail page state
+  const [selectedAnalysisId, setSelectedAnalysisId] = useState<string | null>(null);
+  const [showComparison, setShowComparison] = useState(false); // Comparison state
 
   useEffect(() => {
     fetchDashboardData();
@@ -106,6 +108,14 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
     );
   }
 
+  if (showComparison) {
+    return (
+      <ComparisonPage 
+        onBack={() => setShowComparison(false)}
+      />
+    );
+  }
+
   if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>대시보드 데이터를 불러오는 중...</div>;
 
   return (
@@ -166,15 +176,16 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
                     </section>
               
                     <section className={styles.quickActions}>
-                      <div className={styles.actionCard} onClick={() => setShowWizard(true)}>
-                        <h3>새 분석 시작</h3>
-                        <p style={{ fontSize: '0.9em', color: '#777' }}>대화 이미지를 업로드하세요</p>
-                      </div>
-                      <div className={styles.actionCard} onClick={() => alert('비교')}>
-                        <h3>이전 분석 비교</h3>
-                        <p style={{ fontSize: '0.9em', color: '#777' }}>관계가 어떻게 변했나요?</p>
-                      </div>
-                      <div className={styles.actionCard} onClick={() => alert('플랜')}>
+                              <div className={styles.actionCard} onClick={() => setShowWizard(true)}>
+                                <h3>새 분석 시작</h3>
+                                <p style={{ fontSize: '0.9em', color: '#777' }}>대화 이미지를 업로드하세요</p>
+                              </div>
+                              <div className={styles.actionCard} onClick={() => setShowComparison(true)}>
+                                <h3>이전 분석 비교</h3>
+                                <p style={{ fontSize: '0.9em', color: '#777' }}>관계가 어떻게 변했나요?</p>
+                              </div>
+                              <div className={styles.actionCard} onClick={() => alert('플랜')}>
+                      
                         {profile?.is_subscribed ? (
                           <span className={styles.proBadge}>PRO 활성</span>
                         ) : (

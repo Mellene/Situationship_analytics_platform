@@ -12,6 +12,10 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
   const { session } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Existing Counterparts State
+  const [existingCounterparts, setExistingCounterparts] = useState<any[]>([]);
+  const [selectedCpId, setSelectedCpId] = useState<string | null>(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -22,8 +26,7 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
     hasPartner: '',
     relationshipContext: '',
     physicalDistance: '',
-
-    // Step 2: Quantitative
+// ... (기존 State 유지)
     contactPeriod: '',
     contactFrequency: '',
     initiativeRatio: '',
@@ -43,11 +46,51 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
     chatImages: [] as string[],
   });
 
+  // Load existing counterparts on mount
+  React.useEffect(() => {
+    fetchCounterparts();
+  }, []);
+
+  const fetchCounterparts = async () => {
+    if (!session?.user) return;
+    const { data } = await supabase
+      .from('counterparts')
+      .select('*')
+      .eq('user_id', session.user.id);
+    setExistingCounterparts(data || []);
+  };
+
+  const handleSelectExistingCp = async (cp: any) => {
+    setSelectedCpId(cp.id);
+    updateFormData('counterpartName', cp.nickname);
+
+    // Fetch the latest context for this counterpart to pre-fill
+    const { data } = await supabase
+      .from('analyses')
+      .select('*')
+      .eq('counterpart_id', cp.id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (data) {
+      setFormData(prev => ({
+        ...prev,
+        counterpartName: cp.nickname,
+        hasPartner: data.has_partner || '',
+        relationshipContext: data.relationship_context || '',
+        physicalDistance: data.physical_distance || '',
+      }));
+    }
+  };
+
   const updateFormData = (key: string, value: any) => {
+// ... (기존 로직 유지)
     setFormData(prev => ({ ...prev, [key]: value }));
   };
 
   const handleCheckboxChange = (listKey: 'dateCourses' | 'behavioralSignals', value: string) => {
+// ... (기존 로직 유지)
     setFormData(prev => {
       const currentList = prev[listKey];
       const newList = currentList.includes(value)
@@ -58,6 +101,7 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
   };
 
   const calculateFinalScore = () => {
+// ... (기존 로직 유지)
     let score = 50; // 기본 시작 점수
 
     // 1. MD (Meeting Density & Quality) - 30점 만점
@@ -121,21 +165,26 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
     }`;
 
     try {
-      // 1. Create or get Counterpart
-      const { data: cpData, error: cpError } = await supabase
-        .from('counterparts')
-        .insert([{ user_id: session.user.id, nickname: formData.counterpartName }])
-        .select()
-        .single();
+      let finalCpId = selectedCpId;
 
-      if (cpError) throw cpError;
+      // 1. Create Counterpart only if it's a new one
+      if (!finalCpId) {
+        const { data: cpData, error: cpError } = await supabase
+          .from('counterparts')
+          .insert([{ user_id: session.user.id, nickname: formData.counterpartName }])
+          .select()
+          .single();
+
+        if (cpError) throw cpError;
+        finalCpId = cpData.id;
+      }
 
       // 2. Create Analysis record
       const { error: analysisError } = await supabase
         .from('analyses')
         .insert([{
           user_id: session.user.id,
-          counterpart_id: cpData.id,
+          counterpart_id: finalCpId,
           score_total: finalScore,
           stage: stage,
           summary_public: summary,
@@ -163,22 +212,50 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
   };
 
   const renderStep = () => {
+// ... (Step 1 렌더링 로직 수정 포함)
     switch (currentStep) {
       case 1:
         return (
           <div>
             <h2 className={styles.stepTitle}>[Step 1] 관계의 배경</h2>
-            <p className={styles.stepDescription}>가장 먼저 두 사람이 어떤 상황인지 알려주세요.</p>
+            <p className={styles.stepDescription}>분석할 상대방을 선택하거나 새로 입력해주세요.</p>
             
             <div className={styles.formGroup}>
-              <label>분석할 상대방의 이름(닉네임)</label>
-              <input 
-                type="text" 
-                placeholder="상대방을 지칭할 이름을 적어주세요"
-                className={styles.optionBtn} style={{width: '100%', textAlign: 'left'}}
-                value={formData.counterpartName}
-                onChange={(e) => updateFormData('counterpartName', e.target.value)}
-              />
+              <label>분석 대상 선택</label>
+              <select 
+                className={styles.select}
+                value={selectedCpId || 'new'}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === 'new') {
+                    setSelectedCpId(null);
+                    setFormData(prev => ({...prev, counterpartName: '', hasPartner: '', relationshipContext: '', physicalDistance: ''}));
+                  } else {
+                    const selected = existingCounterparts.find(cp => cp.id === val);
+                    if (selected) handleSelectExistingCp(selected);
+                  }
+                }}
+              >
+                <option value="new">+ 새로운 상대방 직접 입력</option>
+                {existingCounterparts.length > 0 && <optgroup label="이전 분석 대상">
+                  {existingCounterparts.map(cp => (
+                    <option key={cp.id} value={cp.id}>{cp.nickname}</option>
+                  ))}
+                </optgroup>}
+              </select>
+
+              {!selectedCpId && (
+                <div style={{marginTop: '10px'}}>
+                  <label style={{fontSize: '0.9em', color: '#888'}}>상대방 이름</label>
+                  <input 
+                    type="text" 
+                    placeholder="상대방의 이름을 입력하세요"
+                    className={styles.input}
+                    value={formData.counterpartName}
+                    onChange={(e) => updateFormData('counterpartName', e.target.value)}
+                  />
+                </div>
+              )}
             </div>
 
             <div className={styles.formGroup}>
@@ -221,6 +298,7 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
             </div>
           </div>
         );
+// ... (나머지 Step은 동일)
       case 2:
         return (
           <div>
