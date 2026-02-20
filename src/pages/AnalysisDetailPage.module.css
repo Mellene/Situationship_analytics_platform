@@ -172,6 +172,22 @@
   margin-bottom: 10px;
 }
 
+.realContentCard {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 30px;
+  line-height: 1.7;
+  color: #444;
+  border: 1px solid #e9ecef;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* E. Floating CTA */
 .floatingCta {
   position: fixed;

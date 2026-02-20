@@ -66,7 +66,7 @@ function App() {
     return <ProfileCreatePage onProfileCreated={fetchProfile} />;
   }
 
-  return <DashboardPage profile={profile} onLogout={() => setProfile(null)} />;
+  return <DashboardPage profile={profile} onLogout={() => setProfile(null)} onProfileUpdate={fetchProfile} />;
 }
 
 export default App;

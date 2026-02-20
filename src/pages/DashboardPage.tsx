@@ -5,14 +5,16 @@ import styles from './DashboardPage.module.css';
 import AnalysisWizard from './AnalysisWizard';
 import AnalysisDetailPage from './AnalysisDetailPage';
 import ComparisonPage from './ComparisonPage'; // Import Comparison Page
+import MyPage from './MyPage';
 import Footer from '../components/Footer';
 
 interface DashboardPageProps {
   profile: any;
   onLogout: () => void;
+  onProfileUpdate: () => void;
 }
 
-const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
+const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout, onProfileUpdate }) => {
   const { session } = useAuth();
   const [latestAnalysis, setLatestAnalysis] = useState<any>(null);
   const [history, setHistory] = useState<any[]>([]);
@@ -21,6 +23,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedAnalysisId, setSelectedAnalysisId] = useState<string | null>(null);
   const [showComparison, setShowComparison] = useState(false); // Comparison state
+  const [showMyPage, setShowMyPage] = useState(false);
 
   useEffect(() => {
     fetchDashboardData();
@@ -51,9 +54,9 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
         .eq('user_id', session.user.id)
         .order('created_at', { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
-      if (latestError && latestError.code !== 'PGRST116') {
+      if (latestError) {
         console.error('Error fetching latest analysis:', latestError);
       } else {
         setLatestAnalysis(latest);
@@ -136,6 +139,17 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
     );
   }
 
+  if (showMyPage) {
+    return (
+      <MyPage 
+        profile={profile}
+        onBack={() => setShowMyPage(false)}
+        onProfileUpdate={onProfileUpdate}
+        onLogout={onLogout}
+      />
+    );
+  }
+
   if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>대시보드 데이터를 불러오는 중...</div>;
 
   return (
@@ -160,7 +174,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout }) => {
               
               {isDropdownOpen && (
                 <div className={styles.dropdownMenu}>
-                  <button className={styles.menuItem} onClick={() => alert('마이페이지 - 구현 준비 중')}>마이페이지</button>
+                  <button className={styles.menuItem} onClick={() => { setShowMyPage(true); setIsDropdownOpen(false); }}>마이페이지</button>
                   <div className={styles.menuDivider}></div>
                   <button className={`${styles.menuItem} ${styles.logoutItem}`} onClick={handleLogoutClick}>로그아웃</button>
                 </div>
