@@ -3,46 +3,66 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: var(--navbar-bg);
-  color: var(--navbar-text);
-  position: sticky;
+  background-color: transparent;
+  color: #000;
+  position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .navbarBrand {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: inherit; /* Inherit color from navbar */
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #000;
+  flex: 1;
 }
 
-.navbarNav {
+.navbarCenter {
   display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 2rem;
+  flex: 2;
+  justify-content: center;
 }
 
-.navItem {
-  margin-left: 2rem;
+.navbarRight {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
 }
 
 .navLink {
-  color: inherit; /* Inherit color from navbar */
+  color: #000;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
   padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: opacity 0.3s ease;
   cursor: pointer;
   background: none;
   border: none;
 }
 
 .navLink:hover {
-  background-color: var(--navbar-hover-bg);
-  color: var(--navbar-hover-text);
+  opacity: 0.6;
+}
+
+.getStartedBtn {
+  background-color: #000;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.getStartedBtn:hover {
+  background-color: #333;
+  transform: translateY(-1px);
 }
 
 /* Responsive adjustments */

@@ -8,6 +8,7 @@ import AnonymousStartPage from '../components/AnonymousStartPage';
 import SimpleChatInputPage from '../components/SimpleChatInputPage';
 import TrialResultPage from '../components/TrialResultPage';
 import LoadingPage from '../components/LoadingPage'; // Import LoadingPage
+import GradientWave from '../components/GradientWave';
 
 type AnonymousStep = 'Landing' | 'AuthSelection' | 'StartPage' | 'ChatInput' | 'ResultPage';
 
@@ -173,13 +174,28 @@ const LandingPage: React.FC = () => {
           <>
             {/* Hero Section */}
             <section className={styles.heroSection}>
-              <h1 className={styles.heroTitle}>당신이 생각하는 그 사람의 행동이,</h1>
-              <h1 className={styles.heroTitle}>썸이라는 <span className={styles.highlight}>확신</span>이 있나요?</h1>
-              <button className={styles.ctaButton} onClick={handleStartAnalysisClick}>썸 분석 시작하기</button>
+              <GradientWave />
+              <div className={styles.heroContent}>
+                <h1 className={styles.heroTitle}>
+                  당신이 생각하는 <br /> 썸이라는 확신
+                </h1>
+                <p className={styles.heroDescription}>
+                  그 사람의 행동이 썸인지 아닌지 헷갈리시나요? <br />
+                  AI 기반의 관계 분석 서비스로 명확한 답을 얻어보세요.
+                </p>
+                <div className={styles.ctaButtons}>
+                  <button className={styles.ctaButton} onClick={handleStartAnalysisClick}>
+                    썸 분석 시작하기
+                  </button>
+                  <button className={styles.secondaryButton} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+                    더 알아보기
+                  </button>
+                </div>
+              </div>
             </section>
 
             {/* Trust Elements Section */}
-            <section className={styles.trustSection}>
+            <section id="features" className={styles.trustSection}>
               <div className={styles.trustItem}>
                 <p className={styles.trustValue}><NumberAnimation targetValue={95} suffix="%" /></p>
                 <p className={styles.trustLabel}>분석 정확도</p>
@@ -194,7 +210,7 @@ const LandingPage: React.FC = () => {
             </section>
 
             {/* Feature Introduction Cards */}
-            <section className={styles.featuresSection}>
+            <section id="price" className={styles.featuresSection}>
               <h2 className={styles.sectionTitle}>핵심 기능</h2>
               <div className={styles.featureCards}>
                 <div className={styles.featureCard}>
@@ -213,7 +229,7 @@ const LandingPage: React.FC = () => {
             </section>
 
             {/* Credibility Explanation Section */}
-            <section className={styles.credibilitySection}>
+            <section id="contact" className={styles.credibilitySection}>
               <h2 className={styles.sectionTitle}>분석 점수의 과학적 근거</h2>
               <p className={styles.credibilityText}>
                 본 썸 분석 점수는 관계심리·커뮤니케이션 연구를 기반으로 산출됩니다. 
@@ -261,7 +277,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className={styles.landingPage}>
-      <NavigationBar />
+      <NavigationBar onStartClick={handleStartAnalysisClick} />
       {renderContent()}
       <footer className={styles.footer}>
         <p>&copy; 2024 Dopamin. All rights reserved.</p>
