@@ -10,6 +10,13 @@ import TrialResultPage from '../components/TrialResultPage';
 import LoadingPage from '../components/LoadingPage'; // Import LoadingPage
 import GradientWave from '../components/GradientWave';
 
+// Import images
+import img1 from '../assets/1.png';
+import img2 from '../assets/2.png';
+import img3 from '../assets/3.png';
+import img4 from '../assets/4.png';
+import img5 from '../assets/5.png';
+
 type AnonymousStep = 'Landing' | 'AuthSelection' | 'StartPage' | 'ChatInput' | 'ResultPage';
 
 // Helper function to convert sumPeriod to weeks
@@ -162,6 +169,7 @@ const LandingPage: React.FC = () => {
     setCurrentAnonymousStep('ChatInput');
   };
 
+  const showNavAndFooter = currentAnonymousStep === 'Landing';
 
   const renderContent = () => {
     if (isLoading) {
@@ -194,36 +202,79 @@ const LandingPage: React.FC = () => {
               </div>
             </section>
 
-            {/* Trust Elements Section */}
+            {/* Features Section with Images */}
             <section id="features" className={styles.trustSection}>
-              <div className={styles.trustItem}>
-                <p className={styles.trustValue}><NumberAnimation targetValue={95} suffix="%" /></p>
-                <p className={styles.trustLabel}>분석 정확도</p>
-              </div>
-              <div className={styles.trustItem}>
-                <p className={styles.trustValue}><NumberAnimation targetValue={10000} suffix="+" /></p>
-                <p className={styles.trustLabel}>사용자</p>
-              </div>
-              <div className={styles.trustItem}>
-                <ReviewCarousel reviews={reviews} />
+              <h2 className={styles.sectionTitle}>Platform Features</h2>
+              <p>우리 플랫폼에서는 이런 정보를 제공합니다.</p>
+              <div className={styles.imageFeatureGrid}>
+                <div className={styles.imageFeatureItem}>
+                  <img src={img1} alt="Feature 1" className={styles.featureImage} />
+                  <div className={styles.featureOverlay}>
+                    <h3>정밀한 대화 분석</h3>
+                    <p>심리학 기반 알고리즘으로 대화 속 숨은 감정을 찾아냅니다.</p>
+                  </div>
+                </div>
+                <div className={styles.imageFeatureItem}>
+                  <img src={img2} alt="Feature 2" className={styles.featureImage} />
+                  <div className={styles.featureOverlay}>
+                    <h3>실시간 호감도 측정</h3>
+                    <p>변화하는 관계의 온도를 실시간으로 확인하세요.</p>
+                  </div>
+                </div>
+                <div className={styles.imageFeatureItem}>
+                  <img src={img3} alt="Feature 3" className={styles.featureImage} />
+                  <div className={styles.featureOverlay}>
+                    <h3>맞춤형 솔루션</h3>
+                    <p>상대방의 성향에 맞는 최적의 멘트를 제안합니다.</p>
+                  </div>
+                </div>
+                <div className={styles.imageFeatureItem}>
+                  <img src={img4} alt="Feature 4" className={styles.featureImage} />
+                  <div className={styles.featureOverlay}>
+                    <h3>압도적인 정확도</h3>
+                    <p>95% 이상의 분석 정확도로 신뢰할 수 있는 결과를 제공합니다.</p>
+                  </div>
+                </div>
+                <div className={styles.imageFeatureItem}>
+                  <img src={img5} alt="Feature 5" className={styles.featureImage} />
+                  <div className={styles.featureOverlay}>
+                    <h3>비밀 보장 서비스</h3>
+                    <p>당신의 소중한 대화 데이터는 안전하게 보호됩니다.</p>
+                  </div>
+                </div>
               </div>
             </section>
 
-            {/* Feature Introduction Cards */}
+            {/* Pricing Section */}
             <section id="price" className={styles.featuresSection}>
-              <h2 className={styles.sectionTitle}>핵심 기능</h2>
-              <div className={styles.featureCards}>
-                <div className={styles.featureCard}>
-                  <h3>호감도 분석</h3>
-                  <p>상대방의 <span className={styles.highlight}>관심</span>을 수치화하여 객관적으로 파악하세요.</p>
+              <h2 className={styles.sectionTitle}>멤버십 플랜</h2>
+              <div className={styles.pricingGrid}>
+                <div className={styles.priceCard}>
+                  <div className={styles.planName}>Standard</div>
+                  <div className={styles.planPrice}>₩0 <span>/무료</span></div>
+                  <ul className={styles.planFeatures}>
+                    <li>기본 호감도 분석</li>
+                    <li>최근 3개 분석 기록 저장</li>
+                    <li>텍스트 패턴 기본 분석</li>
+                  </ul>
+                  <button className={`${styles.priceBtn} ${styles.priceBtnStandard}`} onClick={handleStartAnalysisClick}>
+                    무료로 시작하기
+                  </button>
                 </div>
-                <div className={styles.featureCard}>
-                  <h3>답장 패턴</h3>
-                  <p>연락 <span className={styles.highlight}>속도</span>와 빈도로 상대의 <span className={styles.highlight}>몰입도</span>를 분석합니다.</p>
-                </div>
-                <div className={styles.featureCard}>
-                  <h3>고백 타이밍</h3>
-                  <p>AI가 분석한 데이터로 <span className={styles.highlight}>최적의 순간</span>을 예측해 성공률을 높여보세요.</p>
+                
+                <div className={`${styles.priceCard} ${styles.priceCardPro}`}>
+                  <div className={styles.proBadge}>Most Popular</div>
+                  <div className={styles.planName}>Pro</div>
+                  <div className={styles.planPrice}>₩4,900 <span>/월</span></div>
+                  <ul className={styles.planFeatures}>
+                    <li>무제한 정밀 분석</li>
+                    <li>고백 성공률 예측 & 타이밍</li>
+                    <li>맞춤형 대화 가이드 제안</li>
+                    <li>모든 분석 히스토리 무제한</li>
+                  </ul>
+                  <button className={`${styles.priceBtn} ${styles.priceBtnPro}`} onClick={handleStartAnalysisClick}>
+                    Pro 플랜 시작하기
+                  </button>
                 </div>
               </div>
             </section>
@@ -277,12 +328,14 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className={styles.landingPage}>
-      <NavigationBar onStartClick={handleStartAnalysisClick} />
+      {showNavAndFooter && <NavigationBar onStartClick={handleStartAnalysisClick} />}
       {renderContent()}
-      <footer className={styles.footer}>
-        <p>&copy; 2024 Dopamin. All rights reserved.</p>
-        <p>본 서비스의 모든 내용은 관계심리 연구를 기반으로 합니다.</p>
-      </footer>
+      {showNavAndFooter && (
+        <footer className={styles.footer}>
+          <p>&copy; 2024 Dopamin. All rights reserved.</p>
+          <p>본 서비스의 모든 내용은 관계심리 연구를 기반으로 합니다.</p>
+        </footer>
+      )}
     </div>
   );
 };
