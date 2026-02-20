@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import styles from './LandingPage.module.css';
-import NumberAnimation from '../components/NumberAnimation';
-import ReviewCarousel from '../components/ReviewCarousel';
 import NavigationBar from '../components/NavigationBar';
 import AuthSelectionPage from '../components/AuthSelectionPage';
 import AnonymousStartPage from '../components/AnonymousStartPage';
@@ -48,14 +46,6 @@ const LandingPage: React.FC = () => {
   const [currentAnonymousStep, setCurrentAnonymousStep] = useState<AnonymousStep>('Landing');
   const [isLoading, setIsLoading] = useState(false); // New state for loading
   const [calculatedResultData, setCalculatedResultData] = useState<any>(null); // State to store dynamic results
-
-  const reviews = [
-    { id: 1, content: "썸 때문에 밤새 고민했는데, 이젠 확신이 들어요!", author: "김*원" },
-    { id: 2, content: "분석 결과가 너무 정확해서 소름 돋았어요. 덕분에 좋은 인연 만났습니다!", author: "이*정" },
-    { id: 3, content: "애매했던 관계에 명확한 답을 얻었어요. 정말 유용합니다!", author: "박*호" },
-    { id: 4, content: "썸 전문가가 된 기분이에요. 주변 친구들에게도 추천하고 있어요!", author: "최*영" },
-    { id: 5, content: "간단한 질문 몇 개로 이렇게 깊이 있는 분석이라니 놀랍네요.", author: "정*민" },
-  ];
 
   const handleStartAnalysisClick = () => {
     setCurrentAnonymousStep('AuthSelection');
@@ -169,7 +159,6 @@ const LandingPage: React.FC = () => {
     setCurrentAnonymousStep('ChatInput');
   };
 
-  const showNavAndFooter = currentAnonymousStep === 'Landing';
 
   const renderContent = () => {
     if (isLoading) {
@@ -205,7 +194,6 @@ const LandingPage: React.FC = () => {
             {/* Features Section with Images */}
             <section id="features" className={styles.trustSection}>
               <h2 className={styles.sectionTitle}>Platform Features</h2>
-              <p>우리 플랫폼에서는 이런 정보를 제공합니다.</p>
               <div className={styles.imageFeatureGrid}>
                 <div className={styles.imageFeatureItem}>
                   <img src={img1} alt="Feature 1" className={styles.featureImage} />
@@ -328,14 +316,12 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className={styles.landingPage}>
-      {showNavAndFooter && <NavigationBar onStartClick={handleStartAnalysisClick} />}
+      <NavigationBar onStartClick={handleStartAnalysisClick} />
       {renderContent()}
-      {showNavAndFooter && (
-        <footer className={styles.footer}>
-          <p>&copy; 2024 Dopamin. All rights reserved.</p>
-          <p>본 서비스의 모든 내용은 관계심리 연구를 기반으로 합니다.</p>
-        </footer>
-      )}
+      <footer className={styles.footer}>
+        <p>&copy; 2024 Dopamin. All rights reserved.</p>
+        <p>본 서비스의 모든 내용은 관계심리 연구를 기반으로 합니다.</p>
+      </footer>
     </div>
   );
 };
