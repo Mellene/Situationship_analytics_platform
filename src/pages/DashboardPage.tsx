@@ -113,6 +113,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ profile, onLogout, onProf
   if (showWizard) {
     return (
       <AnalysisWizard 
+        userMbti={profile?.mbti}
         onComplete={() => {
           setShowWizard(false);
           fetchDashboardData();

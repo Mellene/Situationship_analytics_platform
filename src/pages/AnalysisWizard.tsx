@@ -6,9 +6,10 @@ import styles from './AnalysisWizard.module.css';
 interface AnalysisWizardProps {
   onComplete: () => void;
   onCancel: () => void;
+  userMbti?: string;
 }
 
-const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel }) => {
+const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel, userMbti }) => {
   const { session } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,6 +22,7 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
   const [formData, setFormData] = useState({
     // Step 0: Counterpart Info
     counterpartName: '',
+    counterpartMbti: '',
 
     // Step 1: Context
     hasPartner: '',
@@ -63,6 +65,7 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
   const handleSelectExistingCp = async (cp: any) => {
     setSelectedCpId(cp.id);
     updateFormData('counterpartName', cp.nickname);
+    updateFormData('counterpartMbti', cp.mbti || '');
 
     // Fetch the latest context for this counterpart to pre-fill
     const { data } = await supabase
@@ -100,11 +103,48 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
     });
   };
 
+  const getMbtiCompatibilityBonus = (myMbti: string, yourMbti: string) => {
+    if (!myMbti || !yourMbti) return 0;
+
+    // 간단한 MBTI 궁합 로직 (간소화 버전)
+    // 환상의 궁합: +10점, 좋은 궁합: +5점, 그외: 0점
+    const bestMatches: Record<string, string[]> = {
+      'INFP': ['ENFJ', 'ENTJ'],
+      'ENFP': ['INFJ', 'INTJ'],
+      'INFJ': ['ENFP', 'ENTP'],
+      'ENFJ': ['INFP', 'ISFP'],
+      'INTJ': ['ENFP', 'ENTP'],
+      'ENTJ': ['INFP', 'INTP'],
+      'INTP': ['ENTJ', 'ESTJ'],
+      'ENTP': ['INFJ', 'INTJ'],
+      'ISFP': ['ENFJ', 'ESFJ', 'ESTJ'],
+      'ESFP': ['ISFJ', 'ISTJ'],
+      'ISTP': ['ESFJ', 'ESTJ'],
+      'ESTP': ['ISFJ'],
+      'ISFJ': ['ESFP', 'ESTP'],
+      'ESFJ': ['ISFP', 'ISTP'],
+      'ISTJ': ['ESFP'],
+      'ESTJ': ['INTP', 'ISFP', 'ISTP']
+    };
+
+    if (bestMatches[myMbti]?.includes(yourMbti)) return 10;
+    
+    // 알파벳 기반 보완적 궁합 (+5점)
+    // E-I, S-N 등 조화가 잘 이루어지는 경우
+    let matchCount = 0;
+    if (myMbti[0] !== yourMbti[0]) matchCount++; // 외향/내향 보완
+    if (myMbti[3] !== yourMbti[3]) matchCount++; // 판단/인식 보완
+    
+    if (matchCount >= 2) return 5;
+    
+    return 0;
+  };
+
   const calculateFinalScore = () => {
-// ... (기존 로직 유지)
     let score = 50; // 기본 시작 점수
 
     // 1. MD (Meeting Density & Quality) - 30점 만점
+// ... (기본 점수 산출 로직 유지)
     const mCount = formData.meetingCount || 0;
     const mTypeBonus = formData.meetingType === '항상 1:1로 만남' ? 5 : 0;
     const distanceAdjustment = formData.physicalDistance === '장거리' || formData.physicalDistance === '해외' ? 1.5 : 1.0;
@@ -135,8 +175,11 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
     const courseBonus = formData.dateCourses.includes('저녁 식사와 술') ? 3 : 0;
     const psScore = Math.min(25, signalScore + courseBonus);
 
+    // 5. MBTI Bonus
+    const mbtiBonus = getMbtiCompatibilityBonus(userMbti || '', formData.counterpartMbti);
+
     // 총합 계산
-    score = mdScore + rvScore + inScore + psScore;
+    score = mdScore + rvScore + inScore + psScore + mbtiBonus;
 
     // 필터링 및 최종 가중치 (상대 연애 유무)
     if (formData.hasPartner === '연인 있음') score *= 0.1;
@@ -152,17 +195,23 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
     else if (finalScore >= 40) stage = '호감 단계';
     else if (formData.hasPartner === '연인 있음') stage = '불가능(차단 권장)';
 
-    return { finalScore, stage };
+    return { finalScore, stage, mbtiBonus };
   };
 
   const handleSubmit = async () => {
     if (!session?.user) return;
     setIsSubmitting(true);
 
-    const { finalScore, stage } = calculateFinalScore();
-    const summary = `${formData.counterpartName}님과의 관계는 현재 '${stage}' 단계입니다. ${
+    const { finalScore, stage, mbtiBonus } = calculateFinalScore();
+    let summary = `${formData.counterpartName}님과의 관계는 현재 '${stage}' 단계입니다. ${
       finalScore > 70 ? '긍정적인 신호가 많이 포착되었습니다.' : '조금 더 지켜볼 필요가 있는 관계입니다.'
     }`;
+
+    if (mbtiBonus >= 10) {
+      summary += ` 특히 두 분은 MBTI 궁합이 매우 뛰어나서 서로를 더 잘 이해할 가능성이 높습니다!`;
+    } else if (mbtiBonus >= 5) {
+      summary += ` 두 분은 MBTI 특성상 서로의 부족한 점을 보완해줄 수 있는 좋은 조합입니다.`;
+    }
 
     try {
       let finalCpId = selectedCpId;
@@ -171,7 +220,11 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
       if (!finalCpId) {
         const { data: cpData, error: cpError } = await supabase
           .from('counterparts')
-          .insert([{ user_id: session.user.id, nickname: formData.counterpartName }])
+          .insert([{ 
+            user_id: session.user.id, 
+            nickname: formData.counterpartName,
+            mbti: formData.counterpartMbti 
+          }])
           .select()
           .single();
 
@@ -256,6 +309,20 @@ const AnalysisWizard: React.FC<AnalysisWizardProps> = ({ onComplete, onCancel })
                   />
                 </div>
               )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>상대방의 MBTI (선택)</label>
+              <select 
+                className={styles.select}
+                value={formData.counterpartMbti}
+                onChange={(e) => updateFormData('counterpartMbti', e.target.value)}
+              >
+                <option value="">모름 / 선택 안함</option>
+                {['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP'].map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
             </div>
 
             <div className={styles.formGroup}>

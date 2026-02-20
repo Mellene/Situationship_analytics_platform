@@ -15,7 +15,7 @@ const MyPage: React.FC<MyPageProps> = ({ profile, onBack, onProfileUpdate, onLog
   const [nickname, setNickname] = useState(profile?.nickname || '');
   const [gender, setGender] = useState(profile?.gender || 'male');
   const [age, setAge] = useState(profile?.age?.toString() || '');
-  const [bio, setBio] = useState(profile?.bio || '');
+  const [mbti, setMbti] = useState(profile?.mbti || '');
   const [isUpdating, setIsUpdating] = useState(false);
   const [stats, setStats] = useState({ totalAnalyses: 0, avgScore: 0 });
   const [recentReports, setRecentReports] = useState<any[]>([]);
@@ -87,23 +87,25 @@ const MyPage: React.FC<MyPageProps> = ({ profile, onBack, onProfileUpdate, onLog
     
     setIsUpdating(true);
     try {
+      const updateData: any = {
+        nickname,
+        gender,
+        age: parseInt(age) || 0,
+        mbti: mbti || null
+      };
+
       const { error } = await supabase
         .from('profiles')
-        .update({
-          nickname,
-          gender,
-          age: parseInt(age),
-          // bio 필드는 스키마 확인 후 추가 예정
-        })
+        .update(updateData)
         .eq('id', session.user.id);
 
       if (error) throw error;
       
       alert('프로필이 업데이트되었습니다.');
       onProfileUpdate();
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error updating profile:', err);
-      alert('업데이트 중 오류가 발생했습니다.');
+      alert(`업데이트 실패: ${err.message || '데이터베이스 컬럼(MBTI 등)이 생성되었는지 확인해주세요.'}`);
     } finally {
       setIsUpdating(false);
     }
@@ -207,6 +209,15 @@ const MyPage: React.FC<MyPageProps> = ({ profile, onBack, onProfileUpdate, onLog
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
               />
+            </div>
+            <div className={styles.formGroup} style={{ flex: 1 }}>
+              <label className={styles.label}>MBTI</label>
+              <select className={styles.select} value={mbti} onChange={(e) => setMbti(e.target.value)}>
+                <option value="">선택 안함</option>
+                {['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP'].map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
             </div>
           </div>
           <button className={styles.saveBtn} disabled={isUpdating}>
